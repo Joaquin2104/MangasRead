@@ -1,0 +1,44 @@
+<table class="table text-center">
+    <thead>
+
+    <tr>
+        <th colspan="5" class="titulo-tabla">Lista de Mangas</th>
+    </tr>
+
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Autor</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Compra</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (manga of mangas; track manga.id) { 
+
+            <tr [ngClass]="{'clearance': manga.clearance}">
+            <td><img 
+                [src]="manga.image" [alt]="manga.name" width="100" class="img-thumbnail">
+            </td>
+            <td>{{ manga.name }}</td>
+            <td>{{ manga.author }}</td>
+            <td>{{ manga.price | currency : '' : 'symbol' : '1.0-0' }}</td>
+            @if (manga.stock > 0) {
+                <td>{{ manga.stock}}</td>
+            } @else {
+                <td><span class="badge bg-info text-dark">Sin stock</span></td>
+            }
+            <td>
+                <app-input-number [quantity]="manga.quantity" [max]="manga.stock" (quantityChange)="manga.quantity = $event"></app-input-number>
+                @if (manga.stock > 0) {
+                     <button type="button" class="btn btn-dark" (click)="addToCart(manga)">Comprar</button>
+                }
+            </td>
+        } @empty {
+            <tr>
+                <td colspan="4">No hay mangas para mostrar.</td>
+            </tr>
+        }
+    </tbody>
+</table>

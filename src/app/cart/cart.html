@@ -1,0 +1,12 @@
+<h2 class="titulo-carrito mt-3">Carrito de compras</h2>
+<ul>
+    @for (manga of (cartList$ | async); track manga.id) {
+        @if(manga.quantity > 0){
+        <li>
+            {{ manga.name }}: {{ manga.quantity }}
+        </li>
+        }
+    } @empty {
+        <li>El carrito está vacío.</li>
+    }
+</ul>
